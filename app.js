@@ -2,8 +2,7 @@ const SUPABASE_URL = 'https://grlaiyobzuhoxpofqhrb.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_JfhWW06jtowD1Af22vfUxA__d_MBbDE';
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const GEMINI_API_KEY = 'AQ.Ab8RN6LapTf9ZKKydJWlUYuaj7lPKNYqMbRg-MYGOn5ZssfLLQ';
-
+const GEMINI_API_KEY = 'AIzaSyCZcShc87auHALL09oUoexMto-tFxnUvLU';
 const EMPLOYEE_MAP = {
   '1':  { absenName: 'REIHAN',     masterName: 'REIHAN MUHAMMAD ALIEF' },
   '2':  { absenName: 'AQSHAL',     masterName: 'MUHAMMAD AQSHAL LESMANA' },
