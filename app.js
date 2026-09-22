@@ -8,7 +8,7 @@ const EMPLOYEE_MAP = {
   '1':  { absenName: 'REIHAN',     masterName: 'REIHAN MUHAMMAD ALIEF' },
   '2':  { absenName: 'AQSHAL',     masterName: 'MUHAMMAD AQSHAL LESMANA' },
   '4':  { absenName: 'EDISOPANDI', masterName: 'EDI SOPANDI' },
-  '5':  { absenName: 'ABDUL GHANI',masterName: 'MUHAMMAD ADBUL GHANI' },
+  '5':  { absenName: 'ABDUL GHANI',masterName: 'MUHAMMAD ABDUL GHANI' },
   '9':  { absenName: 'JULIAN',     masterName: 'JULIAN TRI SAPUTRA' },
   '10': { absenName: 'DAFA',       masterName: 'DAFFA CAHYA NUGRAHA' },
   '11': { absenName: 'OCHA',       masterName: 'OCHA HERDIATNA' },
@@ -253,7 +253,6 @@ function escapeHtml(value) {
     .replace(/'/g, '&#039;');
 }
 
-// --- FUNGSI KOREKSI INPUT LANGSUNG (INLINE EDITING) ---
 window.editInline = async function(table, id, field, currentValue) {
   if (!id || id === 'undefined') {
     showToast('Data ini belum memiliki ID tetap.');
@@ -336,7 +335,6 @@ async function loadData(targetPage = null) {
   }
 }
 
-// --- SISTEM ANIMASI TRANSISI HALAMAN KILAT ---
 let pageTransitionTimeout;
 function showPage(page) {
   document.querySelectorAll('.nav button, .b-nav-btn').forEach(btn => {
@@ -546,7 +544,7 @@ function updateDashboardMetrics(yearMonth) {
     <div style="display: flex; flex-direction: column; gap: 6px; padding-top: 4px;">
       <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px dashed var(--line); padding-bottom: 6px;">
         <span>Laba/Rugi:</span>
-        <b style="color: ${netProfitOrLoss >= 0 ? 'var(--success)' : 'var(--danger)'};">${money(netProfitOrLoss)} (${netProfitOrLoss >)</b>
+        <b style="color: ${netProfitOrLoss >= 0 ? 'var(--success)' : 'var(--danger)'};">${money(netProfitOrLoss)}</b>
       </div>
       <div style="display: flex; align-items: center; justify-content: space-between;">
         <span>Total Selisih ESB:</span>
@@ -1109,7 +1107,6 @@ function downloadExpenseReportImage() {
   downloadElementAsImage('captureExpenseReport', 'LAPORAN_PENGELUARAN_' + date);
 }
 
-// --- FUNGSI HALAMAN PEMANTAUAN PENGELUARAN HARIAN ---
 function renderExpenseTracker() {
   const contentEl = $('content');
   if (!contentEl) return;
@@ -2501,7 +2498,82 @@ window.renderWasteSalesTable = function () {
     .join('');
 };
 
-// --- FUNGSI PENGATURAN SISTEM MASTER (DIPERLUAS) ---
+function renderAiChatPage() {
+  const contentEl = $('content');
+  if (!contentEl) return;
+  contentEl.innerHTML = `
+  <div class="top">
+    <div>
+      <div class="title">Asisten AI & Analisis</div>
+      <div class="subtitle">Tanya Jawab Pintar Berbasis Seluruh Data Usaha</div>
+    </div>
+  </div>
+  <div class="panel" style="display:flex; flex-direction:column; height: calc(100vh - 180px); max-height: 650px; padding: 15px;">
+    <div id="chatMessages" style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:10px; padding-bottom:10px; border-bottom:1px solid var(--line); margin-bottom:10px;">
+      <div style="background:var(--input-bg); padding:12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px; max-width: 85%;">
+        👋 Halo! Saya adalah Asisten AI untuk Rumah Makan Tahu Sumedang Sari Kedele Unit Subang. Saya telah membaca seluruh data keuangan, absensi, gaji, pengeluaran, dan kasbon Anda. Apa yang ingin Anda tanyakan atau analisis hari ini?
+      </div>
+    </div>
+    <div style="display:flex; gap:8px;">
+      <input type="text" id="chatInput" placeholder="Ketik pertanyaan atau minta analisis..." onkeydown="if(event.key==='Enter') sendChatMessage()" style="flex:1; padding:12px; border:1px solid var(--line); border-radius:10px; font-size:14px; background:var(--input-bg); color:var(--text);">
+      <button class="btn btn-primary" onclick="sendChatMessage()" style="padding: 0 16px;"><i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+  </div>
+  `;
+}
+
+async function sendChatMessage() {
+  const input = $('chatInput');
+  const container = $('chatMessages');
+  if (!input || !container) return;
+  const text = input.value.trim();
+  if (!text) return;
+
+  container.innerHTML += `
+  <div style="align-self:flex-end; background:var(--wa-primary); color:white; padding:12px; border-radius:10px; font-size:13.5px; max-width:85%; word-break:break-word;">
+    ${escapeHtml(text)}
+  </div>
+  `;
+  input.value = '';
+  container.scrollTop = container.scrollHeight;
+
+  const loadingId = 'load_' + Date.now();
+  container.innerHTML += `
+  <div id="${loadingId}" style="align-self:flex-start; background:var(--input-bg); color:var(--muted); padding:12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px;">
+    <i>🤖 Gemini sedang menganalisis data...</i>
+  </div>
+  `;
+  container.scrollTop = container.scrollHeight;
+
+  const summaryContext = `
+Data Ringkasan Aplikasi (Sari Kedele Subang):
+- Total Data Sales (Pendapatan): ${DB.sales.length} hari tercatat.
+- Total Data Pengeluaran Murni: ${DB.expenses.length} item tercatat.
+- Total Data Absensi: ${DB.attendance.length} record.
+- Total Karyawan Master Gaji: ${DB.masterSalary.length} orang.
+- Total Kasbon Aktif: ${DB.advances.length} catatan.
+- Total Cicilan Aktif: ${DB.installments.length} catatan.
+`;
+
+  const fullPrompt = `Anda adalah konsultan keuangan profesional dan asisten operasional cerdas untuk Rumah Makan Tahu Sumedang Sari Kedele Unit Subang. Berikut adalah konteks data saat ini:
+${summaryContext}
+
+Pertanyaan Pengguna: "${text}"
+Jawablah secara akurat, jelas, profesional dalam bahasa Indonesia, dan berikan saran praktis jika diperlukan.`;
+
+  const reply = await callGeminiAPI(fullPrompt);
+
+  const loadEl = $(loadingId);
+  if (loadEl) {
+    loadEl.outerHTML = `
+    <div style="align-self:flex-start; background:var(--input-bg); color:var(--text); padding:12px; border-radius:10px; border:1px solid var(--line); font-size:13.5px; max-width:85%; word-break:break-word;">
+      🤖 ${escapeHtml(reply).replace(/\n/g, '<br>')}
+    </div>
+    `;
+  }
+  container.scrollTop = container.scrollHeight;
+}
+
 function renderSettingsPage() {
   const contentEl = $('content');
   if (!contentEl) return;
