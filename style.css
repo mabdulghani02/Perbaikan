@@ -27,20 +27,20 @@
   --btn-glass: rgba(255, 255, 255, 0.7);
 }
 
-/* TEMA GELAP */
+/* TEMA GELAP (Telah Diperbarui: Lebih Lembut dan Ergonomis) */
 [data-theme="dark"] {
-  --bg-gradient: radial-gradient(circle at 10% 10%, #1e1b4b 0%, #000000 40%, #0f172a 100%);
-  --text: #f5f5f7;
+  --bg-gradient: radial-gradient(circle at 10% 10%, #2a2a2d 0%, #1c1c1e 40%, #121212 100%);
+  --text: #e5e5e7; /* Putih redup, tidak menyilaukan */
   --muted: #98989d;
-  --line: rgba(235, 235, 245, 0.15);
+  --line: rgba(235, 235, 245, 0.1); /* Garis pembatas lebih transparan */
   
-  --glass-bg: rgba(30, 30, 32, 0.45);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-border-inset: rgba(255, 255, 255, 0.05);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --glass-bg: rgba(40, 40, 44, 0.65); /* Latar kaca sedikit lebih buram dan abu-abu */
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-inset: rgba(255, 255, 255, 0.03);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   
-  --input-bg: rgba(0, 0, 0, 0.3);
-  --btn-glass: rgba(120, 120, 128, 0.2);
+  --input-bg: rgba(0, 0, 0, 0.25);
+  --btn-glass: rgba(120, 120, 128, 0.15);
 }
 
 * { 
@@ -103,7 +103,6 @@ button, input, select { font-family: inherit; }
 .nav button i { width: 22px; text-align: center; font-size: 18px; color: var(--wa-primary); opacity: 0.8; }
 .nav button:active { transform: scale(0.97); background: var(--btn-glass); }
 
-/* --- EFEK LAPISAN AIR PADA TOMBOL NAVIGASI SAMPING YANG AKTIF --- */
 .nav button.active { 
   position: relative;
   overflow: hidden;
@@ -152,9 +151,9 @@ button, input, select { font-family: inherit; }
 .sidebar-overlay.active { display: block; animation: fadeIn 0.3s ease; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-/* BOTTOM NAVIGATION IPHONE DOCK STYLE */
+/* BOTTOM NAVIGATION IPHONE DOCK STYLE (Diperbarui: Ikon Saja, Terpusat) */
 .bottom-nav {
-  position: fixed; bottom: 16px; left: 16px; right: 16px; height: 70px; 
+  position: fixed; bottom: 16px; left: 16px; right: 16px; height: 65px; 
   border-radius: 24px; display: flex; justify-content: space-around; align-items: center; z-index: 950;
   background: var(--glass-bg);
   backdrop-filter: blur(24px) saturate(180%);
@@ -163,33 +162,71 @@ button, input, select { font-family: inherit; }
   box-shadow: var(--glass-shadow);
 }
 .b-nav-btn {
-  background: transparent; border: 0; color: var(--muted); display: flex; flex-direction: column;
+  background: transparent; border: 0; color: var(--muted); display: flex;
   align-items: center; justify-content: center; flex: 1; height: 100%; cursor: pointer;
-  font-size: 11px; font-weight: 600; gap: 6px; position: relative;
+  position: relative;
 }
-.b-nav-btn i { font-size: 20px; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 2; }
+.b-nav-btn i { font-size: 24px; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 2; }
 .b-nav-btn:active i { transform: scale(0.8) translateY(4px); }
 
-/* --- EFEK LAPISAN AIR (GLOW/RIPPLE) PADA BOTTOM NAV AKTIF --- */
 .b-nav-btn.active { color: var(--wa-primary); }
 .b-nav-btn.active i { transform: translateY(-2px); }
 .b-nav-btn.active::before {
   content: '';
   position: absolute;
-  top: 10px;
-  width: 36px; height: 36px;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px; height: 44px;
   background: radial-gradient(circle, rgba(0, 122, 255, 0.25) 0%, rgba(0, 122, 255, 0) 70%);
   border-radius: 50%;
   z-index: 1;
   animation: waterPulse 2s infinite alternate ease-in-out;
 }
-@keyframes waterPulse {
-  0% { transform: scale(0.9); opacity: 0.7; }
-  100% { transform: scale(1.1); opacity: 1; }
+
+/* TOMBOL MELAYANG ASISTEN AI (FAB) */
+.fab-ai {
+  position: fixed;
+  bottom: 95px; /* Ditempatkan di atas navigasi bawah */
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, #8ab4f8, var(--wa-primary));
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 24px rgba(0, 122, 255, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 960;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.fab-ai:active {
+  transform: scale(0.9);
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.4);
+}
+.fab-ai i {
+  animation: sparkleFloat 3s infinite ease-in-out;
+}
+@keyframes sparkleFloat {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 0.9; }
+}
+
+/* ANIMASI TRANSISI HALAMAN CEPAT & HALUS */
+.page-transition {
+  opacity: 0;
+  transform: translateY(12px) scale(0.98);
+  transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+}
+.page-transition.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 .main { margin-left: 0; width: 100%; padding: 20px 16px; min-width: 0; }
-
 .top { display: flex; flex-direction: column; align-items: stretch; gap: 8px; margin-bottom: 24px; width: 100%; }
 .title { font-size: 28px; font-weight: 800; line-height: 1.1; letter-spacing: -0.04em; }
 .subtitle { color: var(--muted); font-size: 14px; font-weight: 500; }
@@ -208,7 +245,6 @@ button, input, select { font-family: inherit; }
 }
 .card-green::before { background: var(--success); box-shadow: 0 0 15px var(--success); }
 .card-danger::before { background: var(--danger); box-shadow: 0 0 15px var(--danger); }
-
 .card-label { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
 .card-value { font-size: 32px; font-weight: 800; margin-top: 8px; letter-spacing: -0.03em; }
 
@@ -256,27 +292,20 @@ button, input, select { font-family: inherit; }
   letter-spacing: -0.01em;
 }
 
-/* --- EFEK LAPISAN AIR PADA TOMBOL UTAMA (PRIMARY) --- */
 .btn-primary { 
   position: relative;
   overflow: hidden;
   background: linear-gradient(135deg, var(--wa-teal), var(--wa-primary)); 
   color: white; 
-  box-shadow: 
-    0 8px 20px var(--wa-primary-glow),
-    inset 0 1px 2px rgba(255, 255, 255, 0.6); 
+  box-shadow: 0 8px 20px var(--wa-primary-glow), inset 0 1px 2px rgba(255, 255, 255, 0.6); 
   border: 1px solid rgba(255,255,255,0.2); 
 }
 .btn-primary::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 50%;
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 50%;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.05) 100%);
-  border-radius: 16px 16px 0 0;
-  pointer-events: none;
+  border-radius: 16px 16px 0 0; pointer-events: none;
 }
 .btn-primary:active { transform: scale(0.96); box-shadow: 0 4px 10px var(--wa-primary-glow); }
-
 .btn-secondary { background: var(--btn-glass); border: 1px solid var(--glass-border); color: var(--text); }
 .btn-secondary:active { transform: scale(0.96); }
 .btn-success { background: var(--success); color: white; box-shadow: 0 8px 20px rgba(52, 199, 89, 0.4); }
@@ -289,6 +318,32 @@ button, input, select { font-family: inherit; }
 .table tr:last-child td { border-bottom: none; }
 .right { text-align: right !important; }
 .center { text-align: center !important; }
+
+/* KOREKSI INPUT LANGSUNG (INLINE EDITING PREPARATION) */
+.editable-cell {
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s;
+  padding-right: 24px !important;
+}
+.editable-cell:hover {
+  background: var(--btn-glass);
+  border-radius: 8px;
+}
+.editable-cell::after {
+  content: '\f040'; /* Ikon Pensil FontAwesome */
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: var(--wa-primary);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.editable-cell:hover::after { opacity: 1; }
 
 .badge { display: inline-block; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; letter-spacing: 0.02em; }
 .badge-success { background: rgba(52, 199, 89, 0.15); color: var(--success); }
@@ -349,147 +404,58 @@ button, input, select { font-family: inherit; }
 .slip-net-bar { background: #e2e8f0; display: grid; grid-template-columns: 1fr 18px 80px; font-weight: 800; padding: 6px 8px; margin-top: 8px; font-size: 12px; border: 1px solid #cbd5e1; border-radius: 4px; }
 .slip-footer-date { text-align: right; font-size: 10px; color: #334155; margin-top: 6px; font-style: italic; }
 
-/* SEGMENTED CONTROL / SUBMENU */
 .sub-nav-btn {
   background: var(--btn-glass); color: var(--text); border: 1px solid var(--glass-border);
   border-radius: 14px; padding: 12px 20px; font-weight: 600; font-size: 14px;
   cursor: pointer;
 }
-
-/* --- EFEK LAPISAN AIR PADA SUBMENU AKTIF --- */
 .sub-nav-btn.active-sub {
   position: relative;
   overflow: hidden;
   background: var(--wa-primary) !important; color: white !important;
-  box-shadow: 
-    0 6px 15px var(--wa-primary-glow),
-    inset 0 1px 2px rgba(255, 255, 255, 0.6);
+  box-shadow: 0 6px 15px var(--wa-primary-glow), inset 0 1px 2px rgba(255, 255, 255, 0.6);
   border-color: transparent;
 }
 .sub-nav-btn.active-sub::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 50%;
+  content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 50%;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.05) 100%);
-  border-radius: 14px 14px 0 0;
-  pointer-events: none;
+  border-radius: 14px 14px 0 0; pointer-events: none;
 }
 
-/* =========================================================
-   MODERN DONUT CHART - LIQUID GLASS (PENJUALAN PER KATEGORI)
-   ========================================================= */
-.chart-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-  flex-wrap: wrap;
-  padding: 10px 0;
-}
-
-/* Lingkaran Diagram menggunakan Conic Gradient */
+.chart-wrapper { display: flex; align-items: center; justify-content: center; gap: 30px; flex-wrap: wrap; padding: 10px 0; }
 .donut-chart {
-  position: relative;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
+  position: relative; width: 200px; height: 200px; border-radius: 50%;
   background: conic-gradient(var(--line) 0% 100%);
-  box-shadow: 
-    0 10px 30px rgba(0,0,0,0.1), 
-    inset 0 4px 10px rgba(255,255,255,0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1), inset 0 4px 10px rgba(255,255,255,0.4);
+  display: flex; align-items: center; justify-content: center;
   animation: chartSpin 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
+@keyframes chartSpin { from { transform: scale(0.8) rotate(-45deg); opacity: 0; } to { transform: scale(1) rotate(0); opacity: 1; } }
 
-@keyframes chartSpin {
-  from { transform: scale(0.8) rotate(-45deg); opacity: 0; }
-  to { transform: scale(1) rotate(0); opacity: 1; }
-}
-
-/* Lubang Tengah dengan Efek Kaca (Liquid Glass) */
 .donut-chart::before {
-  content: '';
-  position: absolute;
-  width: 130px;
-  height: 130px;
+  content: ''; position: absolute; width: 130px; height: 130px;
   background: var(--glass-bg);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border-radius: 50%;
-  border: 1px solid var(--glass-border);
-  box-shadow: 
-    inset 0 2px 4px rgba(255, 255, 255, 0.6),
-    0 4px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 50%; border: 1px solid var(--glass-border);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.6), 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* Teks di Tengah Lingkaran */
-.donut-inner-text {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-}
-.donut-inner-text h3 {
-  margin: 0;
-  font-size: 26px;
-  font-weight: 800;
-  color: var(--text);
-  letter-spacing: -0.03em;
-}
-.donut-inner-text span {
-  font-size: 11px;
-  color: var(--muted);
-  text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-}
+.donut-inner-text { position: relative; z-index: 2; text-align: center; }
+.donut-inner-text h3 { margin: 0; font-size: 26px; font-weight: 800; color: var(--text); letter-spacing: -0.03em; }
+.donut-inner-text span { font-size: 11px; color: var(--muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; }
 
-/* Keterangan Persentase (Legend) */
-.chart-legend {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  min-width: 180px;
-}
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
-  padding: 8px 12px;
-  border-radius: 12px;
-  background: var(--btn-glass);
-  border: 1px solid var(--glass-border);
-  transition: transform 0.2s;
-}
-.legend-item:hover {
-  transform: translateX(5px);
-  background: var(--glass-bg);
-}
-.legend-color {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  box-shadow: inset 0 2px 4px rgba(255,255,255,0.5);
-}
+.chart-legend { display: flex; flex-direction: column; gap: 14px; min-width: 180px; }
+.legend-item { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 600; color: var(--text); padding: 8px 12px; border-radius: 12px; background: var(--btn-glass); border: 1px solid var(--glass-border); transition: transform 0.2s; }
+.legend-item:hover { transform: translateX(5px); background: var(--glass-bg); }
+.legend-color { width: 16px; height: 16px; border-radius: 50%; box-shadow: inset 0 2px 4px rgba(255,255,255,0.5); }
 .legend-color.c1 { background: var(--wa-primary); }
 .legend-color.c2 { background: var(--wa-teal); }
 .legend-color.c3 { background: var(--success); }
 .legend-color.c4 { background: var(--danger); }
-
 .legend-label { flex: 1; }
-.legend-percent {
-  font-weight: 800;
-  background: rgba(120, 120, 128, 0.1);
-  padding: 4px 8px;
-  border-radius: 8px;
-  font-size: 13px;
-}
+.legend-percent { font-weight: 800; background: rgba(120, 120, 128, 0.1); padding: 4px 8px; border-radius: 8px; font-size: 13px; }
 
-/* Custom Tooltip Chart.js */
 .apexcharts-tooltip, .chartjs-tooltip {
   background: var(--glass-bg) !important;
   backdrop-filter: blur(24px) saturate(180%) !important;
