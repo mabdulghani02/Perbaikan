@@ -177,7 +177,7 @@ button, input, select { font-family: inherit; }
 
 .page-transition {
   opacity: 0; transform: translateY(12px) scale(0.98);
-  transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+  transition: opacity 0.12s ease-out, transform 0.12s ease-out;
 }
 .page-transition.active { opacity: 1; transform: translateY(0) scale(1); }
 
