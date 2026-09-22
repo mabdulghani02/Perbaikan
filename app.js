@@ -2,7 +2,7 @@ const SUPABASE_URL = 'https://grlaiyobzuhoxpofqhrb.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_JfhWW06jtowD1Af22vfUxA__d_MBbDE';
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const GEMINI_API_KEY = 'AIzaSyCZcShc87auHALL09oUoexMto-tFxnUvLU';
+const GEMINI_API_KEY = 'AQ.Ab8RN6LWtZhxplMKlCFsWayHboBK3lFcmJuxuGEErzoGg1QbkA'
 
 const EMPLOYEE_MAP = {
   '1':  { absenName: 'REIHAN',     masterName: 'REIHAN MUHAMMAD ALIEF' },
@@ -376,7 +376,8 @@ async function callGeminiAPI(promptText) {
     return "⚠️ Kunci API Gemini belum terpasang.";
   }
   
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+  // Menggunakan model terbaik dan stabil dari daftar API Anda
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${GEMINI_API_KEY}`;
   
   try {
     const response = await fetch(url, {
@@ -398,6 +399,7 @@ async function callGeminiAPI(promptText) {
     return `⚠️ Gagal terhubung ke jaringan: ${err.message}`;
   }
 }
+
 
 function renderDashboard() {
   const currentMonth = new Date().toISOString().slice(0, 7);
