@@ -2,7 +2,7 @@ const SUPABASE_URL = 'https://grlaiyobzuhoxpofqhrb.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_JfhWW06jtowD1Af22vfUxA__d_MBbDE';
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-const GEMINI_API_KEY = 'AQ.Ab8RN6LWtZhxplMKlCFsWayHboBK3lFcmJuxuGEErzoGg1QbkA'
+const GROQ_API_KEY = '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';
 
 const EMPLOYEE_MAP = {
   '1':  { absenName: 'REIHAN',     masterName: 'REIHAN MUHAMMAD ALIEF' },
@@ -372,37 +372,39 @@ window.calcExpRow = function (el) {
 };
 
 async function callGeminiAPI(promptText) {
-  if (!GEMINI_API_KEY) {
-    return "⚠️ Kunci API Gemini belum terpasang.";
+  if (!GROQ_API_KEY) {
+    return "⚠️ Kunci API Groq belum terpasang.";
   }
-  
-  // Menggunakan endpoint standar dengan header Authorization Bearer untuk token AQ.
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent`;
-  
+
+  // Endpoint resmi Groq API
+  const url = 'https://api.groq.com/openai/v1/chat/completions';
+
   try {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${GEMINI_API_KEY}`
+        'Authorization': `Bearer ${GROQ_API_KEY}`
       },
       body: JSON.stringify({
-        contents: [{ parts: [{ text: promptText }] }]
+        model: 'llama-3.3-70b-versatile',
+        messages: [
+          { role: 'user', content: promptText }
+        ]
       })
     });
-    
+
     const result = await response.json();
-    if (result.candidates && result.candidates[0]?.content?.parts[0]?.text) {
-      return result.candidates[0].content.parts[0].text;
+    if (result.choices && result.choices[0]?.message?.content) {
+      return result.choices[0].message.content;
     } else if (result.error) {
-      return `⚠️ Error Gemini: ${result.error.message}`;
+      return `⚠️ Error Groq: ${result.error.message}`;
     }
-    return "⚠️ Gagal mendapatkan respons dari Gemini.";
+    return "⚠️ Gagal mendapatkan respons dari AI.";
   } catch (err) {
     return `⚠️ Gagal terhubung ke jaringan: ${err.message}`;
   }
 }
-
 
 
 function renderDashboard() {
