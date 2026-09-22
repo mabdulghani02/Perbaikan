@@ -375,10 +375,9 @@ async function callGeminiAPI(promptText) {
   if (!GROQ_API_KEY) {
     return "⚠️ Kunci API Groq belum terpasang.";
   }
-
-  // Endpoint resmi Groq API
+  
   const url = 'https://api.groq.com/openai/v1/chat/completions';
-
+  
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -393,7 +392,7 @@ async function callGeminiAPI(promptText) {
         ]
       })
     });
-
+    
     const result = await response.json();
     if (result.choices && result.choices[0]?.message?.content) {
       return result.choices[0].message.content;
@@ -405,6 +404,7 @@ async function callGeminiAPI(promptText) {
     return `⚠️ Gagal terhubung ke jaringan: ${err.message}`;
   }
 }
+
 
 
 function renderDashboard() {
