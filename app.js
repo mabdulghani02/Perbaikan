@@ -361,8 +361,8 @@ function showPage(page) {
       if (page === 'aichat') renderAiChatPage();
       if (page === 'settings') renderSettingsPage();
       
-      setTimeout(() => contentEl.classList.add('active'), 50);
-    }, 150);
+      setTimeout(() => contentEl.classList.add('active'), 20);
+    }, 60);
   }
 }
 
