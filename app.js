@@ -546,7 +546,7 @@ function updateDashboardMetrics(yearMonth) {
     <div style="display: flex; flex-direction: column; gap: 6px; padding-top: 4px;">
       <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px dashed var(--line); padding-bottom: 6px;">
         <span>Laba/Rugi:</span>
-        <b style="color: ${netProfitOrLoss >= 0 ? 'var(--success)' : 'var(--danger)'};">${money(netProfitOrLoss)} (${netProfitOrLoss >= 0 ? 'Surplus/Lebih' : 'Defisit/Minus'})</b>
+        <b style="color: ${netProfitOrLoss >= 0 ? 'var(--success)' : 'var(--danger)'};">${money(netProfitOrLoss)} (${netProfitOrLoss >)</b>
       </div>
       <div style="display: flex; align-items: center; justify-content: space-between;">
         <span>Total Selisih ESB:</span>
