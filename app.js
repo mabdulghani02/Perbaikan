@@ -376,13 +376,21 @@ async function callGeminiAPI(promptText) {
     return "⚠️ Kunci API Gemini belum terpasang.";
   }
   
-  // Menggunakan model terbaik dan stabil dari daftar API Anda
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${GEMINI_API_KEY}`;
+  // Menyesuaikan format header secara otomatis jika menggunakan token AQ.
+  const isOAuth = GEMINI_API_KEY.startsWith('AQ.');
+  const url = isOAuth 
+    ? `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent`
+    : `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${GEMINI_API_KEY}`;
   
+  const headers = { 'Content-Type': 'application/json' };
+  if (isOAuth) {
+    headers['Authorization'] = `Bearer ${GEMINI_API_KEY}`;
+  }
+
   try {
     const response = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: headers,
       body: JSON.stringify({
         contents: [{ parts: [{ text: promptText }] }]
       })
