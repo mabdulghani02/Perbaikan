@@ -376,21 +376,16 @@ async function callGeminiAPI(promptText) {
     return "⚠️ Kunci API Gemini belum terpasang.";
   }
   
-  // Menyesuaikan format header secara otomatis jika menggunakan token AQ.
-  const isOAuth = GEMINI_API_KEY.startsWith('AQ.');
-  const url = isOAuth 
-    ? `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent`
-    : `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${GEMINI_API_KEY}`;
+  // Menggunakan endpoint standar dengan header Authorization Bearer untuk token AQ.
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent`;
   
-  const headers = { 'Content-Type': 'application/json' };
-  if (isOAuth) {
-    headers['Authorization'] = `Bearer ${GEMINI_API_KEY}`;
-  }
-
   try {
     const response = await fetch(url, {
       method: 'POST',
-      headers: headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${GEMINI_API_KEY}`
+      },
       body: JSON.stringify({
         contents: [{ parts: [{ text: promptText }] }]
       })
@@ -407,6 +402,7 @@ async function callGeminiAPI(promptText) {
     return `⚠️ Gagal terhubung ke jaringan: ${err.message}`;
   }
 }
+
 
 
 function renderDashboard() {
