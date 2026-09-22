@@ -376,7 +376,7 @@ async function callGeminiAPI(promptText) {
     return "⚠️ Kunci API Gemini belum terpasang.";
   }
   
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${GEMINI_API_KEY}`;
   
   try {
     const response = await fetch(url, {
