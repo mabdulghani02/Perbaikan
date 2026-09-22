@@ -6,13 +6,11 @@
   <base target="_top">
   <title>AS - Administrasi Subang</title>
 
-  <!-- Penambahan Kode Manifes dan Ikon -->
   <link rel="manifest" href="/manifest.json">
-  <!-- Ikon Apple disesuaikan warnanya agar lebih cocok dengan mode gelap modern -->
   <link rel="apple-touch-icon" href="https://ui-avatars.com/api/?name=AS&background=1e1e1e&color=8ab4f8&size=192">
 
-  <link rel="stylesheet" href="style.css?v=2.0">
-  <!-- Menggunakan FontAwesome terbaru untuk ikon-ikon yang lebih modern -->
+  <!-- Versi 3.0 memaksa peramban membuang memori lama -->
+  <link rel="stylesheet" href="style.css?v=3.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -25,7 +23,6 @@
 
 <body>
 
-<!-- HEADER MOBILE (Logo bergaya modern/futuristik) -->
 <div class="mobile-header">
   <div class="mobile-header-title">
     <i class="fa-solid fa-sparkles" style="color: #8ab4f8; margin-right: 5px;"></i> AS
@@ -35,7 +32,7 @@
       <i id="themeIcon" class="fa-solid fa-moon"></i>
     </button>
     <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Buka Menu">
-      <i class="fa-solid fa-bars-staggered"></i> <!-- Ikon hamburger modern -->
+      <i class="fa-solid fa-bars-staggered"></i>
     </button>
   </div>
 </div>
@@ -43,7 +40,6 @@
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
 <div class="app">
-  <!-- SIDEBAR -->
   <aside class="sidebar" id="appSidebar">
     <div class="brand">
       <div style="display: flex; align-items: center; gap: 10px;">
@@ -58,7 +54,6 @@
       </button>
     </div>
 
-    <!-- Navigasi Sidebar Ditambah Halaman Khusus Pemantauan -->
     <div class="nav">
       <button data-page="dashboard" onclick="showPage('dashboard')"><i class="fa-solid fa-layer-group"></i> Dashboard</button>
       <button data-page="sales" onclick="showPage('sales')"><i class="fa-solid fa-arrow-trend-up"></i> Pendapatan</button>
@@ -71,13 +66,11 @@
     </div>
   </aside>
 
-  <!-- KONTEN UTAMA (Wadah untuk halaman yang dirender JS dan animasi transisi) -->
   <main class="main">
     <div id="content" class="page-transition"></div>
   </main>
 </div>
 
-<!-- BOTTOM NAVIGATION BAR (Persis 5 Menu Tanpa Teks, Ikon Modern) -->
 <nav class="bottom-nav">
   <button class="b-nav-btn" data-page="dashboard" onclick="showPage('dashboard')" aria-label="Dashboard">
     <i class="fa-solid fa-layer-group"></i>
@@ -96,18 +89,14 @@
   </button>
 </nav>
 
-<!-- FLOATING ACTION BUTTON (Asisten AI) -->
 <button class="fab-ai" onclick="showPage('aichat')" aria-label="Buka Asisten AI">
-  <i class="fa-solid fa-sparkles"></i>
+  <i class="fa-solid fa-wand-magic-sparkles"></i>
 </button>
 
-<!-- WADAH NOTIFIKASI -->
 <div id="toast" class="toast"></div>
 
-<!-- PEMANGGILAN SCRIPT UTAMA -->
-<script src="app.js?v=2.0"></script>
+<script src="app.js?v=3.0"></script>
   
-<!-- Skrip Pendaftaran Pekerja Layanan -->
 <script>
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js');
