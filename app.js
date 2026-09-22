@@ -535,21 +535,21 @@ function updateDashboardMetrics(yearMonth) {
     insightsEl.innerHTML = `
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: var(--input-bg); padding: 10px; border-radius: 8px; border: 1px solid var(--line);">
       <div>
-        <div style="font-size:11px; color:var(--muted); font-weight:700;">FIXED COST (GAJI+JAJAN)</div>
+        <div style="font-size:11px; color:var(--muted); font-weight:700;">FIXED COST</div>
         <div style="font-size:14px; font-weight:800; color:var(--text);">${money(fixedCost)} <span style="font-size:11px; font-weight:normal; color:var(--muted);">(${pctFixed}%)</span></div>
       </div>
       <div>
-        <div style="font-size:11px; color:var(--muted); font-weight:700;">VARIABLE COST (MURNI)</div>
+        <div style="font-size:11px; color:var(--muted); font-weight:700;">VARIABLE COST</div>
         <div style="font-size:14px; font-weight:800; color:var(--danger);">${money(variableCost)} <span style="font-size:11px; font-weight:normal; color:var(--muted);">(${pctVariable}%)</span></div>
       </div>
     </div>
     <div style="display: flex; flex-direction: column; gap: 6px; padding-top: 4px;">
       <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px dashed var(--line); padding-bottom: 6px;">
-        <span>📊 Laba/Rugi Bersih (Omset - (Fixed+Var)):</span>
+        <span>Laba/Rugi:</span>
         <b style="color: ${netProfitOrLoss >= 0 ? 'var(--success)' : 'var(--danger)'};">${money(netProfitOrLoss)} (${netProfitOrLoss >= 0 ? 'Surplus/Lebih' : 'Defisit/Minus'})</b>
       </div>
       <div style="display: flex; align-items: center; justify-content: space-between;">
-        <span>⚠️ Total Selisih Kas (ESB vs Konter):</span>
+        <span>Total Selisih ESB:</span>
         <b style="color: ${totalSelisihKas > 0 ? 'var(--danger)' : 'var(--success)'};">${money(totalSelisihKas)} (${hariSelisihKas} hari)</b>
       </div>
     </div>
