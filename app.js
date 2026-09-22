@@ -3,6 +3,7 @@ const SUPABASE_ANON_KEY = 'sb_publishable_JfhWW06jtowD1Af22vfUxA__d_MBbDE';
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const GEMINI_API_KEY = 'AIzaSyCZcShc87auHALL09oUoexMto-tFxnUvLU';
+
 const EMPLOYEE_MAP = {
   '1':  { absenName: 'REIHAN',     masterName: 'REIHAN MUHAMMAD ALIEF' },
   '2':  { absenName: 'AQSHAL',     masterName: 'MUHAMMAD AQSHAL LESMANA' },
