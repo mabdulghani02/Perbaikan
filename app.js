@@ -1,5 +1,5 @@
 const SUPABASE_URL = 'https://grlaiyobzuhoxpofqhrb.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_JfhWW06jtowD1Af22vfUxA__d_MBbDE';
+const SUPABASE_ANON_KEY = 'disni ';
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const GROQ_API_KEY = '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';
